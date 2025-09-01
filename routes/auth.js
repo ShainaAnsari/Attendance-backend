@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { authenticateToken } from '../middleware/auth.js';
+import { connectDB } from '../utils/db.js';
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const generateToken = (userId) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-
+await connectDB()
     // Validation
     if (!email || !password) {
       return res.status(400).json({
